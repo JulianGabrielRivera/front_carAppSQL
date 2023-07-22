@@ -1,6 +1,7 @@
 import { AddUser } from "../components/AddUser";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export const Users = () => {
   const [users, setUsers] = useState(null);
@@ -67,11 +68,13 @@ export const Users = () => {
         return (
           <>
             <div style={{ display: "flex" }}>
-              <p>
-                {user.first_name}
+              <Link to={`/users/${user.id}`}>
+                <p>
+                  {user.first_name}
 
-                {user.last_name}
-              </p>
+                  {user.last_name}
+                </p>
+              </Link>
               <button
                 onClick={() => {
                   userTaskBool(user.id);
