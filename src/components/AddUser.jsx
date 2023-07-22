@@ -1,10 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
 
-export const AddUser = () => {
+export const AddUser = ({ setUsers, users }) => {
   const [user, setUser] = useState({
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
   });
 
   const handleChange = (event) => {
@@ -17,11 +17,13 @@ export const AddUser = () => {
       .post("http://localhost:4000/users/create/user", user)
       .then((response) => {
         console.log(response);
+        setUsers([user, ...users]);
       })
       .catch((err) => {
         console.log(err);
       });
   };
+  console.log(users);
   console.log(user);
   return (
     <div>
@@ -30,12 +32,12 @@ export const AddUser = () => {
       <form onSubmit={addUser}>
         <div>
           <label>first name</label>
-          <input type="text" name="firstName" onChange={handleChange} />
+          <input type="text" name="first_name" onChange={handleChange} />
         </div>
         <div>
           <label>last name</label>
 
-          <input type="text" name="lastName" onChange={handleChange} />
+          <input type="text" name="last_name" onChange={handleChange} />
         </div>
         <button>Add User</button>
       </form>

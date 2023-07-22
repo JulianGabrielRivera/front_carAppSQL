@@ -14,20 +14,27 @@ export const Users = () => {
       .then((response) => {
         console.log(response);
         // setToggle(!false);
-        setUsers([...response.data]);
+        let newArray = [...response.data];
+        newArray = newArray.reverse();
+
+        setUsers(newArray);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  const assignTask = (e, taskName, id) => {
+  const assignTask = (taskName, id) => {
     console.log(id);
-    e.preventDefault();
+    // e.preventDefault();
     axios
       .post("http://localhost:4000/tasks/create", { taskName, id })
       .then((response) => {
         console.log(response);
         // setToggle(!false);
+        let newArray = [...response.data];
+        newArray = newArray.reverse();
+
+        setUsers(newArray);
       })
       .catch((err) => {
         console.log(err);
@@ -36,13 +43,17 @@ export const Users = () => {
   const onChangeTask = (e) => {
     setTaskName(e.target.value);
   };
+  console.log(taskName);
 
   useEffect(() => {
     axios
       .get("http://localhost:4000/users")
       .then((response) => {
         console.log(response);
-        setUsers(response.data);
+        let newArray = [...response.data];
+        newArray = newArray.reverse();
+
+        setUsers(newArray);
       })
       .catch((err) => {
         console.log(err);
@@ -51,7 +62,7 @@ export const Users = () => {
   return (
     <div>
       Users
-      <AddUser />
+      <AddUser setUsers={setUsers} users={users} />
       {users?.map((user) => {
         return (
           <>
@@ -69,11 +80,16 @@ export const Users = () => {
                 Task
               </button>
               {user.user_task === 1 ? (
-                <form onSubmit={assignTask}>
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    assignTask(taskName, user.id);
+                  }}
+                >
                   <input
                     type="text"
                     placeholder="Task to assign..."
-                    name="name"
+                    name="taskName"
                     onChange={onChangeTask}
                   ></input>
                   <button>Click to Assign</button>
