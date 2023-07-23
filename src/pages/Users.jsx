@@ -7,7 +7,11 @@ export const Users = () => {
   const [users, setUsers] = useState(null);
   const [toggle, setToggle] = useState(false);
   const [taskName, setTaskName] = useState("");
+  const [priority, setPriority] = useState("");
 
+  const selectPriority = (e) => {
+    setPriority(e.target.value);
+  };
   const userTaskBool = (id) => {
     console.log(id);
     axios
@@ -61,13 +65,22 @@ export const Users = () => {
       });
   }, []);
   return (
-    <div>
+    <div
+      style={{
+        width: "100%",
+      }}
+    >
       Users
       <AddUser setUsers={setUsers} users={users} />
       {users?.map((user) => {
         return (
           <>
-            <div style={{ display: "flex" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
               <Link to={`/users/${user.id}`}>
                 <p>
                   {user.first_name}
@@ -88,14 +101,46 @@ export const Users = () => {
                     e.preventDefault();
                     assignTask(taskName, user.id);
                   }}
+                  style={{
+                    display: "flex",
+                    height: "50px",
+                    alignItems: "center",
+                  }}
                 >
+                  {/* <div
+                    style={{
+                      display: "flex",
+                      height: "100%",
+                      backgroundColor: "#176db7",
+                    }}
+                  > */}
+                  <h4
+                    style={{
+                      backgroundColor: "#176db7",
+                      height: "100%",
+                      alignItems: "center",
+                      display: "flex",
+                    }}
+                  >
+                    Priority
+                  </h4>
+                  <select
+                    onChange={selectPriority}
+                    style={{ backgroundColor: "#176db7", height: "100%" }}
+                  >
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
+                  </select>
+                  {/* </div> */}
                   <input
                     type="text"
                     placeholder="Task to assign..."
                     name="taskName"
                     onChange={onChangeTask}
+                    style={{ height: "90%" }}
                   ></input>
-                  <button>Click to Assign</button>
+                  <button style={{ height: "100%" }}>Click to Assign</button>
                 </form>
               ) : (
                 ""
