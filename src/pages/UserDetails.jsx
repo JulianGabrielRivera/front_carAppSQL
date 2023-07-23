@@ -2,6 +2,8 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
 export const UserDetails = () => {
   const [userName, setUserName] = useState("");
@@ -50,6 +52,21 @@ export const UserDetails = () => {
         console.log(err);
       });
   };
+
+  const deleteTask = (id) => {
+    console.log("hey", id);
+    axios
+      .post("http://localhost:4000/tasks/delete", { id })
+      .then((response) => {
+        console.log(response);
+        const updatedTasks = tasks.filter((task) => task.id !== id);
+        console.log(updatedTasks);
+        setTasks(updatedTasks);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   useEffect(() => {
     getDetails();
   }, []);
@@ -62,18 +79,19 @@ export const UserDetails = () => {
         <h2>{userName}</h2>
       </div>
       <div style={{ width: "90vw", display: "flex", justifyContent: "center" }}>
-        tasks:
+        {/* tasks: */}
         <table style={{ color: "white" }}>
           <tr
             style={{
               display: "flex",
               justifyContent: "space-between",
-              width: "50vw",
+              width: "60vw",
             }}
           >
             <td>Task ID</td>
             <td>Task Name</td>
             <td>Priority</td>
+            <td>Delete</td>
           </tr>
           {tasks &&
             tasks.map((task) => {
@@ -83,7 +101,7 @@ export const UserDetails = () => {
                     style={{
                       display: "flex",
                       justifyContent: "space-between",
-                      width: "50vw",
+                      width: "60vw",
                     }}
                   >
                     <td>{task.id}</td>
@@ -99,6 +117,15 @@ export const UserDetails = () => {
                       <option value="Medium">Medium</option>
                       <option value="Low">Low</option>
                     </select>
+                    <td>
+                      <button
+                        onClick={() => {
+                          deleteTask(task.id);
+                        }}
+                      >
+                        <FontAwesomeIcon icon={faTrashAlt} />
+                      </button>
+                    </td>
                   </tr>
 
                   {/* <div

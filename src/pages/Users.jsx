@@ -12,6 +12,7 @@ export const Users = () => {
   const selectPriority = (e) => {
     setPriority(e.target.value);
   };
+  console.log(priority);
   const userTaskBool = (id) => {
     console.log(id);
     axios
@@ -32,7 +33,7 @@ export const Users = () => {
     console.log(id);
     // e.preventDefault();
     axios
-      .post("http://localhost:4000/tasks/create", { taskName, id })
+      .post("http://localhost:4000/tasks/create", { taskName, priority, id })
       .then((response) => {
         console.log(response);
         // setToggle(!false);
