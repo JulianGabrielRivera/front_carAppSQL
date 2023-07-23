@@ -17,7 +17,10 @@ export const AddUser = ({ setUsers, users }) => {
       .post("http://localhost:4000/users/create/user", user)
       .then((response) => {
         console.log(response);
-        setUsers([user, ...users]);
+        // console.log(users[users.length - 1]);
+        const lastIndex = users[0];
+
+        setUsers([{ id: lastIndex.id + 1, ...user, user_task: 0 }, ...users]);
       })
       .catch((err) => {
         console.log(err);
@@ -27,9 +30,9 @@ export const AddUser = ({ setUsers, users }) => {
   console.log(user);
   return (
     <div>
-      <h1>Add User</h1>
+      <h1 style={{ color: "white" }}>List of users</h1>
 
-      <form onSubmit={addUser}>
+      <form style={{ color: "white" }} onSubmit={addUser}>
         <div>
           <label>first name</label>
           <input type="text" name="first_name" onChange={handleChange} />
