@@ -82,6 +82,7 @@ export const Users = () => {
                 justifyContent: "center",
               }}
             >
+              {user.image ? <img width={100} src={user.image} /> : ""}
               <Link to={`/users/${user.id}`}>
                 <p>
                   {user.first_name}
