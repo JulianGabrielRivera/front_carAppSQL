@@ -42,15 +42,15 @@ export const AddUser = ({ setUsers, users }) => {
         console.log(response);
         // console.log(users[users.length - 1]);
         const lastIndex = users[0];
-
+        console.log(lastIndex);
+        console.log(user);
         setUsers([{ id: lastIndex.id + 1, ...user, user_task: 0 }, ...users]);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  console.log(users);
-  console.log(user);
+
   return (
     <div>
       <h1 style={{ color: "white" }}>List of users</h1>
